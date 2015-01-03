@@ -1,0 +1,12 @@
+{
+  "name": "ocelite",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node eg.js"
+  },
+  "dependencies": {
+    "sqlite3": "^3.0.4",
+    "debug": "^2.1.1"
+  }
+}
