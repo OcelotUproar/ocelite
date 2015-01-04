@@ -64,11 +64,12 @@ var Db = function() {
 
 
 var db = new Db();
-db.init('data.db', ['user'], function() {
-  db.save('user', {name: 'Barbara Fusinska'}, ['name'], function(err) {
-    console.log('Done');
-  });
-});
 
-
+async.series([
+              function(cb) { db.init('data.db', ['user'], cb); },
+              function(cb) { db.save('user', {name: 'Barbara Fusinska', twitter: 'basiafusinska'}, ['name'], cb); }
+            ], 
+            function() {
+              console.log("Finished");
+            });
 
