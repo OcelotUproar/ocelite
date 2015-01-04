@@ -10,6 +10,11 @@ async.series([
                                 console.log(obj);
                                 cb();
                               }); 
+              },
+              function(cb) { db.all('user', function(err, rows) {
+                                console.log(rows);
+                                cb();
+                              }); 
               }
             ], 
             function() {

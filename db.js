@@ -44,6 +44,17 @@ var Db = function() {
     });
   };
 
+  this.all = function(store, cb) {
+    var query = "SELECT s.data FROM " + store + " s;";
+    self._db.all(query, function(err, rows) {
+      var results = [];
+      for(var i in rows) {
+        results.push(JSON.parse(rows[i].data));
+      }
+      cb(null, results);
+    });
+  };
+
   var initSchema = function(store, cb) {
     async.map(store, initTable, cb);
   };
