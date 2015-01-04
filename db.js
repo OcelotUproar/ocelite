@@ -6,8 +6,14 @@ var Db = function() {
   var self = this;
 
   this.init = function(file, store, cb) {
+    self.connect(file, function() {
+      initSchema(store, cb);
+    });
+  };
+
+  this.connect = function(file, cb) {
     self._db = new sqlite3.Database(file);
-    initSchema(store, cb);
+    cb();
   };
 
   this.save = function(store, data, indexes, cb) {
