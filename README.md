@@ -1,8 +1,10 @@
 # Ocelite
+
 ### Schemaless, embeddable, Node.js database
+
 #### Install
 ```
-    $ npm install ocelite
+$ npm install ocelite
 ```
 
 ### API
