@@ -1,4 +1,5 @@
 var debug = require('debug')('ocelite');
+var async = require('async');
 var sqlite3 = require('sqlite3').verbose();
 
 var Db = function() {
@@ -14,14 +15,7 @@ var Db = function() {
   };
 
   var initSchema = function(store, cb) {
-    for(var i in store) {
-      var t = store[i];
-      initTable(t, function(err, t) {
-        debug("Created", t);
-        cb();
-      });
-    }
-
+    async.map(store, initTable, cb);
   };
 
   var initTable = function(table, cb) {
@@ -29,10 +23,13 @@ var Db = function() {
     var createTable = "CREATE TABLE " + table + "(id integer primary key, data blob)";
 
     self._db.get(query, function(err, row) {
-      if(row !== undefined)
+      if(row !== undefined) {
+        debug("Table Exists", table);
         return cb(null, table);
-      else 
+      } else  {
+        debug("Creating Table", table);
         self._db.run(createTable, function() { cb(null, table);}, cb);
+      }
     });
   };
 
