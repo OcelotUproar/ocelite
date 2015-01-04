@@ -33,6 +33,17 @@ var Db = function() {
     });
   };
 
+  this.get = function(store, index, value, cb) {
+    var query = "SELECT s.data FROM " + store + " s INNER JOIN " + store + "_index si ON s.id = si.related_id WHERE si.key = ? AND si.value = ?";
+    self._db.all(query, [index, value], function(err, rows) {
+      var results = [];
+      for(var i in rows) {
+        results.push(JSON.parse(rows[i].data));
+      }
+      cb(null, results);
+    });
+  };
+
   var initSchema = function(store, cb) {
     async.map(store, initTable, cb);
   };
